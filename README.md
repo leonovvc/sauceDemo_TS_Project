@@ -104,4 +104,13 @@ sauceDemo_TS_Project/
 ├── playwright.config.ts # Конфигурация Playwright
 ├── tsconfig.json # Конфигурация TypeScript
 ├── package.json
+<<<<<<< HEAD
 └── README.md
+=======
+└── README.md```
+
+# Отладка
+- Режим отладки: npm run test:debug
+- Просмотр трейсов: В HTML отчете кликнуть на тест -> Trace
+- Скриншоты при падении: Сохраняются в test-results/
+>>>>>>> c6145efc8f5f49541927ae6fca835f4623931da0
