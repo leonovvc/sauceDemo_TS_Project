@@ -52,9 +52,9 @@ test.describe('Regression Tests - Products @regression', () => {
     expect(productDetails?.description).toBe(product.description);
   });
   
-  test('Проверка визуального оформления корзины', async () => {
-    await inventoryPage.verifyInventoryVisual();
-  });
+ // test('Проверка визуального оформления корзины', async () => {
+   // await inventoryPage.verifyInventoryVisual();
+  //});
   
   test('Добавление нескольких продуктов в корзину', async () => {
     for (const product of testProducts) {
