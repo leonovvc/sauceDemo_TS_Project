@@ -68,8 +68,11 @@ npm run test:debug
 
 - Allure Report: allure generate allure-results && allure open
 
+<<<<<<< HEAD
  ### Структура проекта
  ```text
+=======
+>>>>>>> d3126d23ed5f415f94958db5ea728a3124ccfdb6
 sauceDemo_TS_Project/
 ├── .github/
 │ └── workflows/
