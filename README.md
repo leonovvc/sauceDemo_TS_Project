@@ -68,10 +68,14 @@ npm run test:debug
 
 - Allure Report: allure generate allure-results && allure open
 
+# Отладка
+- Режим отладки: npm run test:debug
+- Просмотр трейсов: В HTML отчете кликнуть на тест -> Trace
+- Скриншоты при падении: Сохраняются в test-results/
 
  ### Структура проекта
  ```text
-=======
+
 sauceDemo_TS_Project/
 ├── .github/
 │ └── workflows/
@@ -101,8 +105,3 @@ sauceDemo_TS_Project/
 ├── tsconfig.json # Конфигурация TypeScript
 ├── package.json
 └── README.md
-
-# Отладка
-- Режим отладки: npm run test:debug
-- Просмотр трейсов: В HTML отчете кликнуть на тест -> Trace
-- Скриншоты при падении: Сохраняются в test-results/
