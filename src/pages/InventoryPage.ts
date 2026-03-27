@@ -49,14 +49,19 @@ export class InventoryPage extends BasePage {
   }
   
   async sortProductsBy(option: 'az' | 'za' | 'lohi' | 'hilo'): Promise<void> {
-    await this.sortDropdown.click();
     const optionMap = {
       'az': 'az',
       'za': 'za', 
       'lohi': 'lohi',
       'hilo': 'hilo'
     };
-    await this.page.locator(`option[value="${optionMap[option]}"]`).click();
+    
+    // Способ 1: Использовать selectOption
+    await this.sortDropdown.selectOption(optionMap[option]);
+    
+    // Способ 2: Если selectOption не работает, используйте клик по селекту
+    // await this.sortDropdown.click();
+    // await this.page.locator(`option[value="${optionMap[option]}"]`).click();
   }
   
   async goToCart(): Promise<void> {

@@ -9,7 +9,7 @@ test.describe('Visual Regression Tests @visual', () => {
     await page.goto('/');
   });
   
-  test('should match login page snapshot', async ({ page }) => {
+  test('Должен быть скрин страницы логина', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.waitForPageLoad();
     await expect(page).toHaveScreenshot('login-page-initial.png', {
@@ -18,7 +18,7 @@ test.describe('Visual Regression Tests @visual', () => {
     });
   });
   
-  test('should match login page with error snapshot', async ({ page }) => {
+  test('Должен быть скрин с ошибкой логина', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.login('invalid', 'credentials');
     await expect(page).toHaveScreenshot('login-page-error.png', {
@@ -27,7 +27,7 @@ test.describe('Visual Regression Tests @visual', () => {
     });
   });
   
-  test('should match inventory page snapshot', async ({ page }) => {
+  test('Должен быть скрин станицы inventory', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
     
@@ -40,7 +40,7 @@ test.describe('Visual Regression Tests @visual', () => {
     });
   });
   
-  test('should match cart page snapshot', async ({ page }) => {
+  test('Должен быть скрин станицы cart', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
@@ -57,7 +57,7 @@ test.describe('Visual Regression Tests @visual', () => {
     });
   });
   
-  test('should match responsive design on mobile', async ({ page }) => {
+  test('Должен быть скрин адаптивный под мобилку', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     const loginPage = new LoginPage(page);
     await loginPage.waitForPageLoad();

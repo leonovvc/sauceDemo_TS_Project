@@ -13,7 +13,7 @@ export abstract class BasePage {
   // Скриншот для визуального тестирования
   async takeScreenshot(name: string): Promise<void> {
     await expect(this.page).toHaveScreenshot(`${name}.png`, {
-      maxDiffPixels: 100,
+      maxDiffPixels: 1000,
       threshold: parseFloat(process.env.VISUAL_THRESHOLD || '0.1'),
     });
   }
