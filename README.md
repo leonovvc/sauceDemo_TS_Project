@@ -68,19 +68,36 @@ npm run test:debug
 
 - Allure Report: allure generate allure-results && allure open
 
-base_playwright_project_ts/
+ # Структура проекта
+sauceDemo_TS_Project/
+├── .github/
+│ └── workflows/
+│ └── playwright.yml # GitHub Actions CI/CD
 ├── src/
-│   ├── pages/           # Page Object классы
-│   ├── types/           # TypeScript типы
-│   ├── fixtures/        # Тестовые данные
-│   └── utils/           # Вспомогательные функции
+│ ├── pages/
+│ │ ├── BasePage.ts # Базовый класс для всех страниц
+│ │ ├── LoginPage.ts # Страница авторизации
+│ │ ├── InventoryPage.ts # Каталог товаров
+│ │ └── CartPage.ts # Корзина
+│ ├── types/
+│ │ └── index.ts # TypeScript интерфейсы (Product, UserCredentials и др.)
+│ ├── fixtures/
+│ │ └── testData.ts # Тестовые пользователи, товары, опции сортировки
+│ └── utils/
+│ └── helpers.ts # Вспомогательные функции (retry, скролл, random)
 ├── tests/
-│   ├── smoke/           # Дымовые тесты
-│   ├── regression/      # Регрессионные тесты
-│   └── visual/          # Визуальные тесты
+│ ├── smoke/
+│ │ └── login.smoke.ts # Дымовые тесты логина
+│ ├── regression/
+│ │ └── products.regression.ts # Регрессионные тесты товаров и корзины
+│ └── visual/
+│ └── visual-regression.ts # Визуальные тесты (скриншоты)
+├── .env.example # Пример переменных окружения
+├── .gitignore
 ├── playwright.config.ts # Конфигурация Playwright
-├── tsconfig.json        # Конфигурация TypeScript
-└── package.json         # Зависимости
+├── tsconfig.json # Конфигурация TypeScript
+├── package.json
+└── README.md
 
 # Отладка
 - Режим отладки: npm run test:debug

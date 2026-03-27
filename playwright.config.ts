@@ -6,7 +6,7 @@ import path from 'path';
 dotenv.config();
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: 'tests',
   timeout: 30000,
   fullyParallel: true, // Параллельный запуск тестов
   forbidOnly: !!process.env.CI,
