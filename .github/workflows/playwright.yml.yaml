@@ -36,6 +36,10 @@ jobs:
         echo "AUTH_LOGIN=${{ secrets.AUTH_LOGIN }}" >> .env
         echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
         echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+      env:
+       BASE_URL: ${{ secrets.BASE_URL }}
+       AUTH_LOGIN: ${{ secrets.AUTH_LOGIN }}
+       AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
     
     - name: Run Smoke Tests
       run: npm run test:smoke -- --project=${{ matrix.project }}
