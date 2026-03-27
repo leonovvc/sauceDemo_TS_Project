@@ -68,7 +68,8 @@ npm run test:debug
 
 - Allure Report: allure generate allure-results && allure open
 
- # Структура проекта
+ ### Структура проекта
+ ```text
 sauceDemo_TS_Project/
 ├── .github/
 │ └── workflows/
@@ -87,11 +88,11 @@ sauceDemo_TS_Project/
 │ └── helpers.ts # Вспомогательные функции (retry, скролл, random)
 ├── tests/
 │ ├── smoke/
-│ │ └── login.smoke.ts # Дымовые тесты логина
+│ │ └── login.smoke.test.ts # Дымовые тесты логина
 │ ├── regression/
-│ │ └── products.regression.ts # Регрессионные тесты товаров и корзины
+│ │ └── products.regression.test.ts # Регрессионные тесты товаров и корзины
 │ └── visual/
-│ └── visual-regression.ts # Визуальные тесты (скриншоты)
+│ └── visual-regression.test.ts # Визуальные тесты (скриншоты)
 ├── .env.example # Пример переменных окружения
 ├── .gitignore
 ├── playwright.config.ts # Конфигурация Playwright
