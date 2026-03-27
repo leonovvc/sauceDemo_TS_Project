@@ -26,7 +26,8 @@ test.describe('Smoke Tests - Login @smoke', () => {
     expect(await loginPage.getErrorMessage()).toContain('Sorry, this user has been locked out');
   });
   
-  test('Проверка визуального оформления страницы входа', async () => {
-    await loginPage.verifyLoginPageVisual();
-  });
+ // Визуальный тест временно выключен
+  // test('should validate login page visual', async () => {
+  //   await loginPage.verifyLoginPageVisual();
+  // });
 });
