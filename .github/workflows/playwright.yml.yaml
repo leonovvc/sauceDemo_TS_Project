@@ -2,49 +2,60 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * *'  # Ежедневно в полночь
 
 jobs:
   test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
-    
     strategy:
       matrix:
-        browser: [chromium, msedge]
+        project: [chromium, msedge]
     
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
+    
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium msedge
+    
+    - name: Create .env file
+      run: |
+        echo "ENV=prod" >> .env
+        echo "AUTH_LOGIN=${{ secrets.AUTH_LOGIN }}" >> .env
+        echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
+        echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+    
+    - name: Run Smoke Tests
+      run: npm run test:smoke -- --project=${{ matrix.project }}
       
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
+    - name: Run Regression Tests
+      run: npm run test:regression -- --project=${{ matrix.project }}
       
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps ${{ matrix.browser }}
-      
-      - name: Create .env file
-        run: |
-          echo "AUTH_LOGIN=${{ secrets.AUTH_LOGIN }}" >> .env
-          echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
-          echo "VISUAL_THRESHOLD=0.2" >> .env
-      
-      - name: Create snapshots (first run)
-        run: npx playwright test --update-snapshots || true
-        continue-on-error: true
-      
-      - name: Run tests
-        run: npx playwright test --project=${{ matrix.browser }}
-      
-      - name: Upload report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-${{ matrix.browser }}
-          path: playwright-report/
-          retention-days: 30
+    - name: Run Visual Regression Tests
+      run: npm run test:visual -- --project=${{ matrix.project }}
+    
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.project }}
+        path: playwright-report/
+        retention-days: 30
+    
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.project }}
+        path: test-results/
+        retention-days: 30

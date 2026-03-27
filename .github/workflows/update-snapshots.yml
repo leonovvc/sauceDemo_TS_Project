@@ -1,0 +1,42 @@
+name: Update Visual Snapshots
+
+on:
+  workflow_dispatch:  # Ручной запуск
+  schedule:
+    - cron: '0 0 * * 0'  # Раз в неделю
+
+jobs:
+  update-snapshots:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+      
+      - name: Create .env file
+        run: |
+          echo "AUTH_LOGIN=${{ secrets.AUTH_LOGIN }}" >> .env
+          echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
+      
+      - name: Update snapshots
+        run: npx playwright test --update-snapshots
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "Update visual snapshots"
+          title: "chore: update visual test snapshots"
+          body: |
+            This PR updates visual test snapshots.
+            Please review changes before merging.
+          branch: update-snapshots
+          base: main
