@@ -1,0 +1,26 @@
+{
+  "name": "base_playwright_project_ts",
+  "version": "1.0.0",
+  "description": "Playwright TypeScript automation project with visual regression testing",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:visual": "playwright test --grep @visual",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:chrome": "playwright test --project=chromium",
+    "test:edge": "playwright test --project=msedge",
+    "report": "playwright show-report"
+  },
+  "keywords": ["playwright", "typescript", "automation", "visual-regression"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0",
+    "dotenv": "^16.3.1",
+    "allure-playwright": "^2.10.0"
+  }
+}

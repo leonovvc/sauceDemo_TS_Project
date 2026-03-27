@@ -1,0 +1,88 @@
+# Base Playwright Project (TypeScript)
+
+Проект автоматизации тестирования на TypeScript с использованием Playwright, поддерживающий параллельный запуск, несколько браузеров и визуальное регрессионное тестирование.
+
+## 🚀 Возможности
+
+- ✅ **TypeScript** - полная типизация
+- ✅ **Page Object Model** - удобная структура
+- ✅ **Параллельный запуск** - быстрые тесты
+- ✅ **Мультибраузерность** - Chrome, Edge
+- ✅ **Визуальное тестирование** - скриншотное сравнение
+- ✅ **CI/CD** - GitHub Actions
+- ✅ **Репорты** - HTML, JSON, Allure
+- ✅ **Маркеры тестов** - @smoke, @regression, @visual
+
+## 📋 Требования
+
+- Node.js 18+
+- npm или yarn
+
+## 🔧 Установка
+
+1. **Клонировать репозиторий**
+- git clone <repository-url>
+- cd base_playwright_project_ts
+
+2. **Установить зависимости**
+- npm install
+
+3. **Установить Playwright**
+- npx playwright install
+
+4. **Настроить переменные окружения**
+- cp .env.example .env
+# Отредактировать .env файл с вашими данными
+
+5. **Запуск тестов**
+# Все тесты
+- npm test
+
+# Дымовые тесты
+- npm run test:smoke
+
+# Регрессионные тесты
+- npm run test:regression
+
+# Визуальные тесты
+- npm run test:visual
+
+# Только Chrome
+npm run test:chrome
+
+# Только Edge
+npm run test:edge
+
+# С открытым браузером
+npm run test:headed
+
+# Режим отладки
+npm run test:debug
+
+Отчеты
+После выполнения тестов отчеты доступны:
+
+- HTML Report: npm run report
+
+- JSON Report: test-results.json
+
+- Allure Report: allure generate allure-results && allure open
+
+base_playwright_project_ts/
+├── src/
+│   ├── pages/           # Page Object классы
+│   ├── types/           # TypeScript типы
+│   ├── fixtures/        # Тестовые данные
+│   └── utils/           # Вспомогательные функции
+├── tests/
+│   ├── smoke/           # Дымовые тесты
+│   ├── regression/      # Регрессионные тесты
+│   └── visual/          # Визуальные тесты
+├── playwright.config.ts # Конфигурация Playwright
+├── tsconfig.json        # Конфигурация TypeScript
+└── package.json         # Зависимости
+
+# Отладка
+- Режим отладки: npm run test:debug
+- Просмотр трейсов: В HTML отчете кликнуть на тест -> Trace
+- Скриншоты при падении: Сохраняются в test-results/
