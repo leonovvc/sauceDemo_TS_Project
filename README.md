@@ -100,7 +100,7 @@ sauceDemo_TS_Project/
 ├── playwright.config.ts # Конфигурация Playwright
 ├── tsconfig.json # Конфигурация TypeScript
 ├── package.json
-└── README.md
+└── README.md```
 
 # Отладка
 - Режим отладки: npm run test:debug
