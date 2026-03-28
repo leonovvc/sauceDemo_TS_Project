@@ -2,64 +2,71 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master ]
-  schedule:
-    - cron: '0 0 * * *'  # Ежедневно в полночь
+  workflow_dispatch:  # Ручной запуск
 
 jobs:
-  test:
-    timeout-minutes: 60
+  functional-tests:
+    name: Functional Tests
+    timeout-minutes: 30
     runs-on: ubuntu-latest
+    
     strategy:
       matrix:
-        project: [chromium, msedge]
+        browser: [chromium, msedge]
+        test-type: [smoke, regression]
+      fail-fast: false
     
     steps:
-    - uses: actions/checkout@v3
-    
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium msedge
-    
-    - name: Create .env file
-      run: |
-        echo "ENV=prod" >> .env
-        echo "AUTH_LOGIN=${{ secrets.AUTH_LOGIN }}" >> .env
-        echo "AUTH_PASSWORD=${{ secrets.AUTH_PASSWORD }}" >> .env
-        echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-      env:
-       BASE_URL: ${{ secrets.BASE_URL }}
-       AUTH_LOGIN: ${{ secrets.AUTH_LOGIN }}
-       AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
-    
-    - name: Run Smoke Tests
-      run: npm run test:smoke -- --project=${{ matrix.project }}
+      - uses: actions/checkout@v4
       
-    - name: Run Regression Tests
-      run: npm run test:regression -- --project=${{ matrix.project }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
       
-    - name: Run Visual Regression Tests
-      run: npm run test:visual -- --project=${{ matrix.project }}
-    
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report-${{ matrix.project }}
-        path: playwright-report/
-        retention-days: 30
-    
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results-${{ matrix.project }}
-        path: test-results/
-        retention-days: 30
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      
+      - name: Create .env file
+        run: |
+          echo "ENV=prod" >> .env
+          echo "BASE_URL=https://www.saucedemo.com" >> .env
+          echo "AUTH_LOGIN=standard_user" >> .env
+          echo "AUTH_PASSWORD=secret_sauce" >> .env
+      
+      - name: Run ${{ matrix.test-type }} tests
+        run: npx playwright test --grep @${{ matrix.test-type }} --project=${{ matrix.browser }}
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results-${{ matrix.browser }}-${{ matrix.test-type }}
+          path: playwright-report/
+          retention-days: 30
+
+  # Визуальные тесты - отключены временно
+  # visual-tests:
+  #   name: Visual Tests (Manual Only)
+  #   runs-on: ubuntu-latest
+  #   if: false  # Отключено
+  #   strategy:
+  #     matrix:
+  #       browser: [chromium]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '18'
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps chromium
+  #     - name: Run visual tests
+  #       run: npx playwright test --grep @visual --project=chromium

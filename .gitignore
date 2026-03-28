@@ -1,6 +1,7 @@
 # Зависимости
 node_modules/
 package-lock.json
+yarn.lock
 
 # Playwright артефакты (исключая снапшоты)
 playwright-report/
