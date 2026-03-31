@@ -49,7 +49,7 @@ npm run test:headed
 # Режим отладки
 npm run test:debug
 
-Отчеты
+# Отчеты
 После выполнения тестов отчеты доступны:
 
 - HTML Report: npm run report
